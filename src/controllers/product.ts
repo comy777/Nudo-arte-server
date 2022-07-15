@@ -25,7 +25,7 @@ export const saveProduct = async (req: Request, resp: Response) => {
 	productSave.categorie = validCategorie._id;
 	try {
 		await productSave.save();
-		return resp.send({ product });
+		return resp.send({ product: productSave });
 	} catch (error) {
 		return resp.send({ error: 'Error del servidor' });
 	}
