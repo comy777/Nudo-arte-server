@@ -32,11 +32,15 @@ const saveProduct = (req, resp) => __awaiter(void 0, void 0, void 0, function* (
     const validCategorie = yield Categorie_1.default.findOne({ categorie });
     if (!validCategorie)
         return resp.send({ error: 'La categoria no existe' });
-    const product = new Product_1.default(req.body);
-    product.user = user.id;
-    product.categorie = validCategorie._id;
+    const { product } = req.body;
+    const validateProduct = yield Product_1.default.findOne({ product });
+    if (validateProduct)
+        return resp.send({ error: 'El producto ya se encuentra registrado' });
+    const productSave = new Product_1.default(req.body);
+    productSave.user = user.id;
+    productSave.categorie = validCategorie._id;
     try {
-        yield product.save();
+        yield productSave.save();
         return resp.send({ product });
     }
     catch (error) {

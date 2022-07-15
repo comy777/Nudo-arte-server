@@ -17,11 +17,14 @@ export const saveProduct = async (req: Request, resp: Response) => {
 	const { categorie } = req.body;
 	const validCategorie = await Categorie.findOne({ categorie });
 	if (!validCategorie) return resp.send({ error: 'La categoria no existe' });
-	const product = new Product(req.body);
-	product.user = user.id;
-	product.categorie = validCategorie._id;
+	const { product } = req.body;
+	const validateProduct = await Product.findOne({ product });
+	if (validateProduct) return resp.send({ error: 'El producto ya se encuentra registrado' });
+	const productSave = new Product(req.body);
+	productSave.user = user.id;
+	productSave.categorie = validCategorie._id;
 	try {
-		await product.save();
+		await productSave.save();
 		return resp.send({ product });
 	} catch (error) {
 		return resp.send({ error: 'Error del servidor' });
