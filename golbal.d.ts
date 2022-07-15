@@ -6,7 +6,7 @@ namespace NodeJS {
 		SECRET_KEY: string;
 		CLOUDINARY_URL: string;
 		UPLOAD_PRESET: string;
-		CLUOD_NAME: string;
+		CLOUD_NAME: string;
 		API_KEY: string;
 		API_SECRET: string;
 	}

@@ -1,9 +1,4 @@
 import cloudinary from 'cloudinary';
-cloudinary.v2.config({
-	cloud_name: process.env.CLUOD_NAME,
-	api_key: process.env.API_KEY,
-	api_secret: process.env.API_SECRET
-});
 
 export const uploadImageCloudinary = async (image: any) => {
 	try {
@@ -12,6 +7,11 @@ export const uploadImageCloudinary = async (image: any) => {
 		const nameExtension = name.split('.');
 		const extension = nameExtension[nameExtension.length - 1];
 		if (!extensionsValid.includes(extension)) return;
+		cloudinary.v2.config({
+			cloud_name: process.env.CLOUD_NAME,
+			api_key: process.env.API_KEY,
+			api_secret: process.env.API_SECRET
+		});
 		return await cloudinary.v2.uploader.upload(tempFilePath, {
 			upload_preset: process.env.UPLOAD_PRESET
 		});
@@ -23,6 +23,11 @@ export const uploadImageCloudinary = async (image: any) => {
 export const deleteImage = async (id: string) => {
 	const public_id = id.trim();
 	try {
+		cloudinary.v2.config({
+			cloud_name: process.env.CLOUD_NAME,
+			api_key: process.env.API_KEY,
+			api_secret: process.env.API_SECRET
+		});
 		await cloudinary.v2.uploader.destroy(`Nudo Arte/${public_id}`);
 		return true;
 	} catch (error) {

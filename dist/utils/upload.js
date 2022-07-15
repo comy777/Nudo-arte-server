@@ -14,11 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getIdCloudinary = exports.deleteImage = exports.uploadImageCloudinary = void 0;
 const cloudinary_1 = __importDefault(require("cloudinary"));
-cloudinary_1.default.v2.config({
-    cloud_name: process.env.CLUOD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-});
 const uploadImageCloudinary = (image) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const extensionsValid = ['png', 'jpg', 'jpeg'];
@@ -27,6 +22,11 @@ const uploadImageCloudinary = (image) => __awaiter(void 0, void 0, void 0, funct
         const extension = nameExtension[nameExtension.length - 1];
         if (!extensionsValid.includes(extension))
             return;
+        cloudinary_1.default.v2.config({
+            cloud_name: process.env.CLOUD_NAME,
+            api_key: process.env.API_KEY,
+            api_secret: process.env.API_SECRET
+        });
         return yield cloudinary_1.default.v2.uploader.upload(tempFilePath, {
             upload_preset: process.env.UPLOAD_PRESET
         });
@@ -39,6 +39,11 @@ exports.uploadImageCloudinary = uploadImageCloudinary;
 const deleteImage = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const public_id = id.trim();
     try {
+        cloudinary_1.default.v2.config({
+            cloud_name: process.env.CLOUD_NAME,
+            api_key: process.env.API_KEY,
+            api_secret: process.env.API_SECRET
+        });
         yield cloudinary_1.default.v2.uploader.destroy(`Nudo Arte/${public_id}`);
         return true;
     }
