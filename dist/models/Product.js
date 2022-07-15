@@ -30,7 +30,8 @@ const ProductSchema = new mongoose_1.Schema({
         default: 0
     },
     description: {
-        type: String
+        type: String,
+        default: ''
     },
     state: {
         type: Boolean,
